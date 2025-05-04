@@ -1,42 +1,55 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Contact form submission
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const nav = document.querySelector('nav');
+    
+    if (menuBtn && nav) {
+      menuBtn.addEventListener('click', function() {
+        nav.classList.toggle('active');
+      });
+    }
+    
+    // Contact form handling
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Here you would normally send the form data to a server
-            // For this static example, we'll just show an alert
-            alert(`Teşekkürler ${name}! Mesajınız alındı. Size ${email} adresinden dönüş yapacağım.`);
-            
-            // Reset the form
-            contactForm.reset();
-        });
-    }
-    
-    // Simple animation for skills section
-    const skillsSection = document.querySelector('.skills');
-    
-    if (skillsSection) {
-        window.addEventListener('scroll', function() {
-            const skillsPosition = skillsSection.getBoundingClientRect().top;
-            const screenPosition = window.innerHeight / 1.3;
-            
-            if (skillsPosition < screenPosition) {
-                skillsSection.style.opacity = '1';
-                skillsSection.style.transform = 'translateY(0)';
-            }
-        });
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // Initial state
-        skillsSection.style.opacity = '0';
-        skillsSection.style.transform = 'translateY(20px)';
-        skillsSection.style.transition = 'all 0.5s ease';
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        
+        alert(`Teşekkürler ${name}! Mesajınız alındı. Size ${email} adresinden dönüş yapacağım.`);
+        contactForm.reset();
+      });
     }
-});
+    
+    // Animate elements when they come into view
+    const animateOnScroll = function() {
+      const cards = document.querySelectorAll('.card');
+      
+      cards.forEach(card => {
+        const cardPosition = card.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (cardPosition < screenPosition) {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    
+    // Set initial state for animated elements
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'all 0.5s ease';
+    });
+    
+    // Run once on load
+    animateOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+  });
